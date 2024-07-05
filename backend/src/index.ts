@@ -27,7 +27,7 @@ app.get('/ping', (req, res) => {
     res.send('pong');
   });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 console.log('DB_USER:', process.env.DB_USER);
 console.log('DB_NAME:', process.env.DB_NAME);
