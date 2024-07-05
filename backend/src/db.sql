@@ -1,0 +1,14 @@
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE entries (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  content TEXT NOT NULL,
+  category VARCHAR(255),
+  date TIMESTAMP NOT NULL,
+  user_id INTEGER REFERENCES users(id)
+);
