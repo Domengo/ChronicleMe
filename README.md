@@ -164,8 +164,7 @@ curl -X POST <http://localhost:5000/auth/login> \
 
 - Add Journal Entry
 
-```
-bash
+```bash
 curl -X POST <http://localhost:5000/entries> \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer <your_jwt_token>" \
