@@ -113,7 +113,7 @@ npm install
 3. **Start the Expo development server**
 
 ```bash
-npm start
+npx expo start
 ```
 
 4. **Run the app on your device**
