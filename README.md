@@ -96,6 +96,12 @@ CREATE TABLE entries (
 npm start
 ```
 
+I deployed the backend and the database on render, you can access it on
+
+```bash
+https://chronicleme.onrender.com
+```
+
 ### Frontend Setup
 
 1. **Navigate to the frontend directory**
@@ -172,7 +178,6 @@ curl -X POST <http://localhost:5000/entries> \
   "title": "My First Entry",
   "content": "This is the content of my first entry.",
   "category": "Personal",
-  "date": "2024-07-08"
 }'
 ```
 
