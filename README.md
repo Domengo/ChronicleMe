@@ -32,7 +32,7 @@ The Personal Journaling App is a mobile application built with React Native and 
 ## Tech Stack
 
 - **Frontend**: React Native, Expo
-- **Backend**: Node.js, Express, MySQL
+- **Backend**: Node.js, Express, postgreSQL
 - **Storage**: AsyncStorage (React Native)
 
 ## Installation
