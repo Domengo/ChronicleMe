@@ -1,0 +1,19 @@
+{
+    "sqltools.connections": [
+        {
+            "pgOptions": {
+                "ssl": {
+                    "rejectUnauthorized": true
+                }
+            },
+            "previewLimit": 50,
+            "server": "dpg-cq47lf88fa8c73flsk1g-a.oregon-postgres.render.com",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "journ",
+            "database": "journalapp",
+            "username": "postgress",
+            "password": "C5PCzk2PbNjdU314taQnRFTCCaOnAij5"
+        }
+    ]
+}
