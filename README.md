@@ -201,7 +201,7 @@ npx expo start
 - You can also download debug-mode app from
 
 ```bash
-<https://expo.dev/accounts/domengo/projects/ChronicleMe/builds/611267f8-59bf-4142-b951-4c17f45464f8>
+https://expo.dev/accounts/domengo/projects/ChronicleMe/builds/611267f8-59bf-4142-b951-4c17f45464f8
 
 ```
 
