@@ -198,6 +198,12 @@ npx expo start
 - Add, edit, and delete journal entries.
 - View categorized journal entries.
 - Update user profile settings.
+- You can also download debug-mode app from
+
+```bash
+<https://expo.dev/accounts/domengo/projects/ChronicleMe/builds/611267f8-59bf-4142-b951-4c17f45464f8>
+
+```
 
 ### Contributing
 
