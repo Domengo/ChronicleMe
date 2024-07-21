@@ -8,7 +8,7 @@ type EntryType = {
   date: string;
 };
 
-export default function JournalEntryItem({ entry }: { entry: EntryType }, onPress: ((event: GestureResponderEvent) => void) | undefined) {
+export default function JournalEntryItem(entry, onPress) {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.item}>
