@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const API_URL = 'https://chronicleme.onrender.com';
 
-export const login = async (username: string, password: string) => {
+export const login = async (username, password) => {
   const response = await fetch(`${API_URL}/auth/login`, {
     method: 'POST',
     headers: {
@@ -20,7 +20,7 @@ export const login = async (username: string, password: string) => {
   }
 };
 
-export const register = async (username: string, password: string) => {
+export const register = async (username, password) => {
   const response = await fetch(`${API_URL}/auth/register`, {
     method: 'POST',
     headers: {
@@ -42,7 +42,7 @@ export const getJournalEntries = async () => {
   return response.json();
 };
 
-export const addJournalEntry = async (entry: { title: string; content: string; category: string; date: Date; }) => {
+export const addJournalEntry = async (entry) => {
   // const token = localStorage.getItem('token');
   const token = await AsyncStorage.getItem('token');
   const response = await fetch(`${API_URL}/entries`, {
@@ -56,7 +56,7 @@ export const addJournalEntry = async (entry: { title: string; content: string; c
   return response.ok;
 };
 
-export const updateJournalEntry = async (id: any, entry: { title: any; content: any; category: any; date: Date; }) => {
+export const updateJournalEntry = async (id, entry) => {
   // const token = localStorage.getItem('token');
   const token = await AsyncStorage.getItem('token');
   const response = await fetch(`${API_URL}/entries/${id}`, {
@@ -70,7 +70,7 @@ export const updateJournalEntry = async (id: any, entry: { title: any; content: 
   return response.ok;
 };
 
-export const deleteJournalEntry = async (id: any) => {
+export const deleteJournalEntry = async (id) => {
   // const token = localStorage.getItem('token');
   const token = await AsyncStorage.getItem('token');
   const response = await fetch(`${API_URL}/entries/${id}`, {
@@ -82,7 +82,7 @@ export const deleteJournalEntry = async (id: any) => {
   return response.ok;
 };
 
-export const updateProfile = async (username: string, password: string) => {
+export const updateProfile = async (username, password) => {
   // const token = localStorage.getItem('token');
   const token = await AsyncStorage.getItem('token');
   const response = await fetch(`${API_URL}/auth/update-profile`, {

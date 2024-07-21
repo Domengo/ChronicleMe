@@ -1,14 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, GestureResponderEvent } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-type EntryType = {
-  title: string;
-  content: string;
-  category: string;
-  date: string;
-};
-
-export default function JournalEntryItem(entry, onPress) {
+export default function JournalEntryItem({ entry, onPress }) {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.item}>

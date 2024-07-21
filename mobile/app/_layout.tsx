@@ -4,7 +4,7 @@ import '../global.css'
 export default function RootLayout() {
   return (
     <Stack>
-      <Stack.Screen name="ChronicleMe" />
+      <Stack.Screen name="index" />
     </Stack>
   );
 }
