@@ -5,6 +5,7 @@ export default function JournalEntryItem({ entry, onPress }) {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.item}>
+        <Text class="text-red-500">Hello</Text>
         <Text style={styles.title}>{entry.title}</Text>
         <Text style={styles.content}>{entry.content}</Text>
         <Text style={styles.category}>{entry.category}</Text>
