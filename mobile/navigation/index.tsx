@@ -15,7 +15,7 @@ import { verifyInstallation } from 'nativewind';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-verifyInstallation();
+// verifyInstallation();
 
 const AuthStack = () => (
   <Stack.Navigator>
