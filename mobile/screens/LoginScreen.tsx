@@ -17,7 +17,7 @@ export default function LoginScreen() {
       setIsSuccess(true);
       setTimeout(() => {
         navigation.navigate("Main");
-      }, 2000);
+      }, 500);
     } else {
       setMessage("Login failed. Please check your credentials.");
       setIsSuccess(false);

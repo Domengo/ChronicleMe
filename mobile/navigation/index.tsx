@@ -10,7 +10,7 @@ import HomeScreen from "../screens/HomeScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import AddEntryScreen from "../screens/AddEntryScreen";
 import EditEntryScreen from "../screens/EditEntryScreen";
-import { verifyInstallation } from 'nativewind';
+// import { verifyInstallation } from 'nativewind';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
