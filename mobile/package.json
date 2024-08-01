@@ -17,9 +17,6 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
-    "@gluestack-ui/nativewind-utils": "^1.0.21",
-    "@gluestack-ui/overlay": "^0.1.15",
-    "@gluestack-ui/toast": "^1.0.7",
     "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-navigation/bottom-tabs": "^6.6.0",
     "@react-navigation/native": "^6.1.17",
@@ -62,6 +59,5 @@
     "prettier": "^3.3.3",
     "react-test-renderer": "18.2.0",
     "typescript": "~5.3.3"
-  },
-  "private": true
+  }
 }

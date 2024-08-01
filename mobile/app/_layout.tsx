@@ -10,7 +10,7 @@
 // }
 import Slot from "expo-router";
 
-import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
+// import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 
 // Import your global CSS file
 import "../global.css"
