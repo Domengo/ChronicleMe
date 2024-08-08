@@ -7,13 +7,13 @@
                 }
             },
             "previewLimit": 50,
-            "server": "dpg-cq47lf88fa8c73flsk1g-a.oregon-postgres.render.com",
+            "server": "dpg-cqqk32rv2p9s73b8rom0-a.oregon-postgres.render.com",
             "port": 5432,
+            "askForPassword": true,
             "driver": "PostgreSQL",
             "name": "journ",
-            "database": "journalapp",
             "username": "postgress",
-            "password": "C5PCzk2PbNjdU314taQnRFTCCaOnAij5"
+            "database": "journalapp_gb6h"
         }
     ]
 }
