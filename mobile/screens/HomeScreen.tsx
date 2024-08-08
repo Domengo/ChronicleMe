@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Button, FlatList, StyleSheet } from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import { View, Text, Button, FlatList, StyleSheet, RefreshControl } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { getJournalEntries } from '../services/api';
 import JournalEntryItem from '../components/JournalEntryItem';
@@ -8,8 +8,17 @@ export default function HomeScreen() {
   const [entries, setEntries] = useState([]);
   const navigation = useNavigation();
 
-  useEffect(() => {
-    fetchEntries();
+  // useEffect(() => {
+  //   fetchEntries();
+  // }, []);
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+      fetchEntries();
+    }, 2000);
   }, []);
 
   const fetchEntries = async () => {
@@ -25,6 +34,9 @@ export default function HomeScreen() {
         renderItem={({ item }) => (
           <JournalEntryItem entry={item} onPress={() => navigation.navigate('EditEntry', { entry: item })} />
         )}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
       <Button title="Add Entry" onPress={() => navigation.navigate('AddEntry')} />
     </View>
