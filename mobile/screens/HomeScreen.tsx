@@ -8,9 +8,10 @@ export default function HomeScreen() {
   const [entries, setEntries] = useState([]);
   const navigation = useNavigation();
 
-  // useEffect(() => {
-  //   fetchEntries();
-  // }, []);
+  useEffect(() => {
+    fetchEntries();
+  }, []);
+
   const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = useCallback(() => {
