@@ -1,16 +1,42 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, Button, FlatList, StyleSheet, RefreshControl } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { getJournalEntries } from '../services/api';
-import JournalEntryItem from '../components/JournalEntryItem';
+import React, { useEffect, useState, useCallback } from "react";
+import {
+  View,
+  Text,
+  Button,
+  FlatList,
+  StyleSheet,
+  RefreshControl,
+  Platform,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { getJournalEntries } from "../services/api";
+import JournalEntryItem from "../components/JournalEntryItem";
+import {RobotoSerif_500Medium_Italic, useFonts} from '@expo-google-fonts/dev'
+import * as SplashScreen from 'expo-splash-screen'
+
+SplashScreen.preventAutoHideAsync();
 
 export default function HomeScreen() {
   const [entries, setEntries] = useState([]);
-  const navigation = useNavigation();
+  const [loaded, error] = useFonts({
+    RobotoSerif_500Medium_Italic, 
+  });
 
   useEffect(() => {
-    fetchEntries();
-  }, []);
+    if (loaded || error) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded, error]);
+
+  // if (!loaded && !error) {
+  //   return null;
+  // }
+
+  const navigation = useNavigation();
+
+  // useEffect(() => {
+  //   fetchEntries();
+  // }, []);
 
   const [refreshing, setRefreshing] = React.useState(false);
 
@@ -20,7 +46,7 @@ export default function HomeScreen() {
       setRefreshing(false);
       fetchEntries();
     }, 2000);
-  }, []);
+  }, [entries]);
 
   const fetchEntries = async () => {
     const data = await getJournalEntries();
@@ -29,17 +55,30 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
+      <Text
+        style={{
+          fontFamily: "RobotoSerif_500Medium_Italic",
+        }}
+      >
+        Inter Black
+      </Text>
       <FlatList
         data={entries}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <JournalEntryItem entry={item} onPress={() => navigation.navigate('EditEntry', { entry: item })} />
+          <JournalEntryItem
+            entry={item}
+            onPress={() => navigation.navigate("EditEntry", { entry: item })}
+          />
         )}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       />
-      <Button title="Add Entry" onPress={() => navigation.navigate('AddEntry')} />
+      <Button
+        title="Add Entry"
+        onPress={() => navigation.navigate("AddEntry")}
+      />
     </View>
   );
 }
