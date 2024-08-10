@@ -60,6 +60,7 @@ const RootStack = () => (
       headerBackTitleStyle: {
         fontSize: 12,
       },
+      headerShown: false
     }}
   >
     <Stack.Screen name="Auth" component={AuthStack} />

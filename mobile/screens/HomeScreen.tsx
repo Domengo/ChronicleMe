@@ -11,15 +11,15 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { getJournalEntries } from "../services/api";
 import JournalEntryItem from "../components/JournalEntryItem";
-import {RobotoSerif_500Medium_Italic, useFonts} from '@expo-google-fonts/dev'
-import * as SplashScreen from 'expo-splash-screen'
+import { RobotoSerif_500Medium_Italic, useFonts } from "@expo-google-fonts/dev";
+import * as SplashScreen from "expo-splash-screen";
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 export default function HomeScreen() {
   const [entries, setEntries] = useState([]);
   const [loaded, error] = useFonts({
-    RobotoSerif_500Medium_Italic, 
+    RobotoSerif_500Medium_Italic,
   });
 
   useEffect(() => {
@@ -28,15 +28,11 @@ export default function HomeScreen() {
     }
   }, [loaded, error]);
 
-  // if (!loaded && !error) {
-  //   return null;
-  // }
-
   const navigation = useNavigation();
 
-  // useEffect(() => {
-  //   fetchEntries();
-  // }, []);
+  useEffect(() => {
+    fetchEntries();
+  }, []);
 
   const [refreshing, setRefreshing] = React.useState(false);
 
@@ -52,6 +48,10 @@ export default function HomeScreen() {
     const data = await getJournalEntries();
     setEntries(data);
   };
+
+  if (!loaded && !error) {
+    return null;
+  }
 
   return (
     <View style={styles.container}>
