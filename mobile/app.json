@@ -32,9 +32,12 @@
       [
         "expo-font",
         {
-          "fonts": ["node_modules/@expo-google-fonts/inter/Inter_900Black.ttf"]
+          "fonts": [
+            "node_modules/@expo-google-fonts/inter/Inter_900Black.ttf"
+          ]
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true
@@ -46,6 +49,6 @@
       "eas": {
         "projectId": "ced47a2b-d74f-454d-a82d-45b0eea14081"
       }
-    },
+    }
   }
 }

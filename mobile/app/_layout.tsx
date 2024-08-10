@@ -1,11 +1,14 @@
-import { Stack } from "expo-router";
+import { Slot } from "expo-router";
 import { PaperProvider } from "react-native-paper";
+import { SessionProvider } from "@/lib/ctx";
 
 export default function RootLayout() {
   return (
-    <PaperProvider>
-      <Stack />
-    </PaperProvider>
+    <SessionProvider>
+      <PaperProvider>
+        <Slot />
+      </PaperProvider>
+    </SessionProvider>
   );
 }
 // import Slot from "expo-router";

@@ -1,6 +1,6 @@
-import React from 'react';
-import Navigation from '../navigation/index';
+// import React from 'react';
+// import Navigation from '../navigation/index';
 
-export default function App() {
-  return <Navigation />;
-}
+// export default function App() {
+//   return <Navigation />;
+// }
