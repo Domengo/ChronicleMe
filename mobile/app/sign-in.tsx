@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { login } from "../services/api";
+import { ActivityIndicator, MD2Colors } from "react-native-paper";
+import { Avatar } from 'react-native-paper';
 
 export default function LoginScreen() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
-  
+
   const navigation = useNavigation();
 
   const handleLogin = async () => {
@@ -27,6 +29,8 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
+        <Avatar.Icon size={48} color={MD2Colors.red800} icon="camera" />
+        <ActivityIndicator animating={true} color={MD2Colors.red500} />
       <Text>Login</Text>
       <TextInput
         style={styles.input}
