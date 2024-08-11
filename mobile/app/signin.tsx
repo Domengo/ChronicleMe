@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { login } from "../services/api";
+import { useSession } from "@/lib/ctx";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import { Avatar } from 'react-native-paper';
 import { router } from "expo-router";
@@ -9,22 +10,20 @@ import { router } from "expo-router";
 export default function LoginScreen() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [isSuccess, setIsSuccess] = useState(false);
+  // const [message, setMessage] = useState("");
+  // const [isSuccess, setIsSuccess] = useState(false);
+
+  const { signIn, message, isSuccess } = useSession();
 
   const navigation = useNavigation();
 
   const handleLogin = async () => {
-    const success = await login(username, password);
-    if (success) {
-      setMessage("Login successful!");
-      setIsSuccess(true);
+    await signIn(username, password);
+    if (isSuccess) {
       setTimeout(() => {
-        navigation.navigate("Main");
+        // navigation.navigate("home");
+        router.push('/home')
       }, 500);
-    } else {
-      setMessage("Login failed. Please check your credentials.");
-      setIsSuccess(false);
     }
   };
 
