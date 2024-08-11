@@ -4,12 +4,15 @@ import { useNavigation } from "@react-navigation/native";
 import { login } from "../services/api";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import { Avatar } from 'react-native-paper';
+import { router } from "expo-router";
 
 export default function LoginScreen() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+
+  // const router = useRouter();
 
   const navigation = useNavigation();
 
@@ -50,7 +53,7 @@ export default function LoginScreen() {
       </View>
       <Button
         title="Register"
-        onPress={() => navigation.navigate("Register")}
+        onPress={() => router.push('/register')}
       />
       <Text style={[styles.message, { color: isSuccess ? 'green' : 'red' }]}>{message}</Text>
     </View>
