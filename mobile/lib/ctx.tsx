@@ -2,10 +2,9 @@ import { useContext, createContext, type PropsWithChildren, useEffect } from "re
 import { useStorageState } from "./useStorageState";
 import { useState } from "react";
 import { login } from "@/services/api";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getToken, removeToken } from "@/services/api";
 
 const AuthContext = createContext<{
-  //   signIn: () => void;
   signIn: (username: string, password: string) => Promise<void>;
   signOut: () => void;
   session?: string | null;
@@ -13,7 +12,6 @@ const AuthContext = createContext<{
   message: string;
   isSuccess: boolean;
 }>({
-  //   signIn: () => null,
   signIn: async () => {},
   signOut: () => null,
   session: null,
@@ -39,27 +37,11 @@ export function SessionProvider({ children }: PropsWithChildren) {
   const [message, setMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
 
-  useEffect(() => {
-    // Check if the token exists in AsyncStorage when the app starts
-    const checkSession = async () => {
-      const token = await AsyncStorage.getItem('token');
-      if (token) {
-        setSession(token); // Set the session if a token is found
-        console.log(`your token is ${token}`);
-      } else {
-        setSession(null); // Clear the session if no token is found
-      }
-    };
-
-    checkSession();
-  }, []);
-
-
   const signIn = async (username: string, password: string) => {
     try {
       const success = await login(username, password);
       if (success) {
-        const token = await AsyncStorage.getItem('token');
+        const token = await getToken();
         setSession(token);
         setMessage("Login successful!");
         setIsSuccess(true);
@@ -74,7 +56,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
   };
 
   const signOut = async () => {
-    await AsyncStorage.removeItem('token'); // Clear the token from AsyncStorage
+    await removeToken();
     setSession(null); // Clear the session
   };
 

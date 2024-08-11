@@ -1,4 +1,9 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  useLayoutEffect,
+} from "react";
 import {
   View,
   Text,
@@ -13,15 +18,18 @@ import { getJournalEntries } from "@/services/api";
 import JournalEntryItem from "@/components/JournalEntryItem";
 import { RobotoSerif_500Medium_Italic, useFonts } from "@expo-google-fonts/dev";
 import * as SplashScreen from "expo-splash-screen";
+import { useSession } from "@/lib/ctx";
 
 // SplashScreen.preventAutoHideAsync();
+
 
 export default function HomeScreen() {
   const [entries, setEntries] = useState([]);
   const [loaded, error] = useFonts({
     RobotoSerif_500Medium_Italic,
   });
-
+  const [refreshing, setRefreshing] = React.useState(false);
+const { signOut } = useSession();
   useEffect(() => {
     if (loaded || error) {
       SplashScreen.hideAsync();
@@ -34,8 +42,6 @@ export default function HomeScreen() {
     fetchEntries();
   }, []);
 
-  const [refreshing, setRefreshing] = React.useState(false);
-
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
@@ -43,6 +49,18 @@ export default function HomeScreen() {
       fetchEntries();
     }, 2000);
   }, [entries]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Button
+          onPress={signOut}
+          title="Sign Out"
+          color={Platform.OS === "ios" ? "#007AFF" : "#000"}
+        />
+      ),
+    });
+  }, [navigation]);
 
   const fetchEntries = async () => {
     const data = await getJournalEntries();
