@@ -12,8 +12,6 @@ export default function LoginScreen() {
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
 
-  // const router = useRouter();
-
   const navigation = useNavigation();
 
   const handleLogin = async () => {
