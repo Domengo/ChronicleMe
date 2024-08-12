@@ -5,6 +5,7 @@ import { Redirect, router } from "expo-router";
 import { ActivityIndicator, MD2Colors, Button } from "react-native-paper";
 import { StatusBar } from "expo-status-bar";
 
+
 export default function RegisterScreen() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
