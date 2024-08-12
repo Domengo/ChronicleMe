@@ -1,4 +1,4 @@
-import { Slot } from "expo-router";
+import { Stack } from "expo-router/stack";
 import { PaperProvider } from "react-native-paper";
 import { SessionProvider } from "@/lib/ctx";
 
@@ -6,7 +6,9 @@ export default function RootLayout() {
   return (
     <SessionProvider>
       <PaperProvider>
-        <Slot />
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        </Stack>
       </PaperProvider>
     </SessionProvider>
   );

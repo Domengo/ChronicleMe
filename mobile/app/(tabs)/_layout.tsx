@@ -23,28 +23,46 @@ export default function TabLayout() {
   // This layout can be deferred because it's not the root layout.
   return (
     <Tabs 
+    // screenOptions={{
+    //   tabBarActiveTintColor: "tomato",
+    //   tabBarInactiveTintColor: "gray",
+    // }}
     screenOptions={({ route }) => ({
-      tabBarIcon: ({ focused, color, size }) => {
-        let iconName;
-
-        if (route.name === "Home") {
-          iconName = focused ? "home" : "home-outline";
-        } else if (route.name === "Settings") {
-          iconName = focused ? "settings" : "settings-outline";
-        }
-        return <Ionicons name={iconName} size={size} color={color} />;
-      },
       tabBarActiveTintColor: "tomato",
       tabBarInactiveTintColor: "gray",
-    })}>
+      tabBarIcon: ({ focused, color, size }) => {
+        let iconName = "";
+
+        if (route.name === "index") {
+          iconName = focused ? "home" : "home-outline";
+        } else if (route.name === "settings") {
+          iconName = focused ? "settings" : "settings-outline";
+        }
+
+        return <Ionicons name={iconName} size={size} color={color} />;
+      },
+    })}
+    >
       <Tabs.Screen
         name="index"
-        options={{ headerTitle: 'Home' }}
+        options={{ title: 'Home',  }}
       />
       <Tabs.Screen
         name="settings"
-        options={{ headerTitle: 'Settings' }}
+        options={{ title: 'Settings' }}
       />
     </Tabs>
   );
 }
+
+// ({ route }) => ({
+// tabBarIcon: ({ focused, color, size }) => {
+//   let iconName = "";
+
+//   if (route.name === "Home") {
+//     iconName = focused ? "home" : "home-outline";
+//   } else if (route.name === "Settings") {
+//     iconName = focused ? "settings" : "settings-outline";
+//   }
+//   return <Ionicons name={iconName} size={size} color={color} />;
+// },})
