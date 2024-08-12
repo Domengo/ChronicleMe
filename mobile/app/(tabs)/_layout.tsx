@@ -54,15 +54,3 @@ export default function TabLayout() {
     </Tabs>
   );
 }
-
-// ({ route }) => ({
-// tabBarIcon: ({ focused, color, size }) => {
-//   let iconName = "";
-
-//   if (route.name === "Home") {
-//     iconName = focused ? "home" : "home-outline";
-//   } else if (route.name === "Settings") {
-//     iconName = focused ? "settings" : "settings-outline";
-//   }
-//   return <Ionicons name={iconName} size={size} color={color} />;
-// },})

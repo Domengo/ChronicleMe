@@ -30,7 +30,7 @@ export default function LoginScreen() {
   //   }
   // }, [isSuccess]); // Redirect when isSuccess changes
   if (isSuccess) {
-    router.push("/home");
+    router.push("/");
   }
 
   return (
