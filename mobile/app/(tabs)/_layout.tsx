@@ -34,29 +34,15 @@ export default function TabLayout() {
         }
         return <Ionicons name={iconName} size={size} color={color} />;
       },
-      tabBarLabel: ({ focused }) => {
-        let label;
-
-        if (route.name === 'home') {
-          label = focused ? 'Home' : 'Home';
-        } else if (route.name === 'settings') {
-          label = focused ? 'Settings' : 'Settings';
-        }
-
-        return <Text style={{ color: focused ? '#673ab7' : '#222' }}>{label}</Text>;
-      },
-      // tabBarActiveTintColor: "tomato",
-      // tabBarInactiveTintColor: "gray",
-      tabBarActiveTintColor: '#673ab7',
-        tabBarInactiveTintColor: '#222',
-        tabBarActiveBackgroundColor: 'red'
+      tabBarActiveTintColor: "tomato",
+      tabBarInactiveTintColor: "gray",
     })}>
       <Tabs.Screen
-        name="(tabs)/home"
+        name="index"
         options={{ headerTitle: 'Home' }}
       />
       <Tabs.Screen
-        name="(tabs)/settings"
+        name="settings"
         options={{ headerTitle: 'Settings' }}
       />
     </Tabs>
