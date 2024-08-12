@@ -22,14 +22,13 @@ import { useSession } from "@/lib/ctx";
 
 // SplashScreen.preventAutoHideAsync();
 
-
 export default function HomeScreen() {
   const [entries, setEntries] = useState([]);
   const [loaded, error] = useFonts({
     RobotoSerif_500Medium_Italic,
   });
   const [refreshing, setRefreshing] = React.useState(false);
-const { signOut } = useSession();
+  const { signOut } = useSession();
   useEffect(() => {
     if (loaded || error) {
       SplashScreen.hideAsync();

@@ -1,37 +1,45 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { login } from "../services/api";
 import { useSession } from "@/lib/ctx";
-import { ActivityIndicator, MD2Colors } from "react-native-paper";
-import { Avatar } from 'react-native-paper';
+import { ActivityIndicator, MD2Colors, Button } from "react-native-paper";
+import { Avatar } from "react-native-paper";
 import { router } from "expo-router";
+import { StatusBar } from 'expo-status-bar';
 
 export default function LoginScreen() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const [message, setMessage] = useState("");
-  // const [isSuccess, setIsSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const hasRedirected = useRef(false);
 
   const { signIn, message, isSuccess } = useSession();
 
   const navigation = useNavigation();
 
   const handleLogin = async () => {
+    setLoading(true);
     await signIn(username, password);
-    if (isSuccess) {
-      setTimeout(() => {
-        // navigation.navigate("home");
-        router.push('/home')
-      }, 500);
-    }
+    setLoading(false);
   };
+
+  // useEffect(() => {
+  //   if (isSuccess && !hasRedirected.current) {
+  //     hasRedirected.current = true; // Set flag to true after redirect
+  //     router.push('/home');
+  //   }
+  // }, [isSuccess]); // Redirect when isSuccess changes
+  if (isSuccess) {
+    router.push("/home");
+  }
 
   return (
     <View style={styles.container}>
-        <Avatar.Icon size={48} color={MD2Colors.red800} icon="camera" />
+      <StatusBar style="dark" animated />
+      {loading && (
         <ActivityIndicator animating={true} color={MD2Colors.red500} />
-      <Text>Login</Text>
+      )}
+      <Text style={styles.title}>Login</Text>
       <TextInput
         style={styles.input}
         placeholder="Username"
@@ -46,13 +54,28 @@ export default function LoginScreen() {
         secureTextEntry
       />
       <View style={styles.button}>
-        <Button title="Login" onPress={handleLogin} />
+        <Button
+          mode="contained"
+          icon="login" // Adding an icon to the button
+          onPress={handleLogin}
+          loading={loading} // Show loading indicator in the button
+          disabled={loading} // Disable the button while loading
+        >
+          {loading ? "Logging in..." : "Login"}{" "}
+          {/* Change button text based on loading state */}
+        </Button>
       </View>
       <Button
-        title="Register"
-        onPress={() => router.push('/register')}
-      />
-      <Text style={[styles.message, { color: isSuccess ? 'green' : 'red' }]}>{message}</Text>
+        mode="contained-tonal"
+        icon="plus"
+        onPress={() => router.push("/register")}
+      >
+        {" "}
+        Register{" "}
+      </Button>
+      <Text style={[styles.message, { color: isSuccess ? "green" : "red" }]}>
+        {message}
+      </Text>
     </View>
   );
 }
@@ -77,6 +100,12 @@ const styles = StyleSheet.create({
   },
   message: {
     marginTop: 20,
-    textAlign: 'center',
+    textAlign: "center",
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 30,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
