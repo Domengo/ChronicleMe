@@ -23,10 +23,6 @@ export default function TabLayout() {
   // This layout can be deferred because it's not the root layout.
   return (
     <Tabs 
-    // screenOptions={{
-    //   tabBarActiveTintColor: "tomato",
-    //   tabBarInactiveTintColor: "gray",
-    // }}
     screenOptions={({ route }) => ({
       tabBarActiveTintColor: "tomato",
       tabBarInactiveTintColor: "gray",
