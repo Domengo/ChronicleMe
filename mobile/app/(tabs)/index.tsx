@@ -96,24 +96,24 @@ export default function HomeScreen() {
         renderItem={({ item }) => (
           <JournalEntryItem
             entry={item}
-            onPress={() => navigation.navigate("EditEntry", { entry: item })}
+            onPress={() => router.push({
+              pathname: 'editEntry',
+              params: { entry: JSON.stringify(item) }
+            })}
           />
         )}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       />
-      {/* <Button
-        title="Add Entry"
-        onPress={() => navigation.navigate("AddEntry")}
-      /> */}
       <FAB
         label="Add Entry"
         icon="plus"
         style={styles.fab}
         onPress={handleAddEntry}
-        color="#fefe67"
-        // rippleColor={}
+        color="#ffd700"
+        // background="#8a2be2"
+        rippleColor="rgba(0, 150, 136, 0.3)" 
       />
     </View>
   );
@@ -129,5 +129,6 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 16,
+    backgroundColor: '#0000ff',
   },
 });

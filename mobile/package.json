@@ -53,7 +53,8 @@
     "expo-auth-session": "~5.5.2",
     "expo-crypto": "~13.0.2",
     "expo-secure-store": "~13.0.2",
-    "@react-native-community/netinfo": "11.3.1"
+    "@react-native-community/netinfo": "11.3.1",
+    "expo-dev-client": "~4.0.25"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
