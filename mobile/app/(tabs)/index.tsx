@@ -19,6 +19,11 @@ import JournalEntryItem from "@/components/JournalEntryItem";
 import { RobotoSerif_500Medium_Italic, useFonts } from "@expo-google-fonts/dev";
 import * as SplashScreen from "expo-splash-screen";
 import { useSession } from "@/lib/ctx";
+import { FAB } from "react-native-paper";
+import { Link } from 'expo-router';
+import { router } from 'expo-router';
+import { useRouter } from 'expo-router';
+
 
 // SplashScreen.preventAutoHideAsync();
 
@@ -29,6 +34,12 @@ export default function HomeScreen() {
   });
   const [refreshing, setRefreshing] = React.useState(false);
   const { signOut } = useSession();
+  const router = useRouter();
+
+  const handleAddEntry = () => {
+    router.navigate('addEntry')
+  }
+  
   useEffect(() => {
     if (loaded || error) {
       SplashScreen.hideAsync();
@@ -92,9 +103,17 @@ export default function HomeScreen() {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       />
-      <Button
+      {/* <Button
         title="Add Entry"
         onPress={() => navigation.navigate("AddEntry")}
+      /> */}
+      <FAB
+        label="Add Entry"
+        icon="plus"
+        style={styles.fab}
+        onPress={handleAddEntry}
+        color="#fefe67"
+        // rippleColor={}
       />
     </View>
   );
@@ -104,5 +123,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+  },
+  fab: {
+    position: "absolute",
+    margin: 16,
+    right: 0,
+    bottom: 16,
   },
 });

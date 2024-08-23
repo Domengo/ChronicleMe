@@ -8,6 +8,7 @@ import {
   RefreshControl,
   Platform,
 } from "react-native";
+import { FAB } from 'react-native-paper';
 import { useNavigation } from "@react-navigation/native";
 import { getJournalEntries } from "../services/api";
 import JournalEntryItem from "../components/JournalEntryItem";
@@ -75,10 +76,11 @@ export default function HomeScreen() {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       />
-      <Button
+      {/* <Button
         title="Add Entry"
         onPress={() => navigation.navigate("AddEntry")}
-      />
+      /> */}
+      
     </View>
   );
 }
@@ -87,5 +89,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
   },
 });
