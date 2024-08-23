@@ -20,9 +20,8 @@ import { RobotoSerif_500Medium_Italic, useFonts } from "@expo-google-fonts/dev";
 import * as SplashScreen from "expo-splash-screen";
 import { useSession } from "@/lib/ctx";
 import { FAB } from "react-native-paper";
-import { Link } from 'expo-router';
-import { router } from 'expo-router';
 import { useRouter } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 
 
 // SplashScreen.preventAutoHideAsync();
@@ -83,6 +82,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
+      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
       <Text
         style={{
           fontFamily: "RobotoSerif_500Medium_Italic",
