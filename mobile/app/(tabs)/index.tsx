@@ -20,9 +20,9 @@ import { RobotoSerif_500Medium_Italic, useFonts } from "@expo-google-fonts/dev";
 import * as SplashScreen from "expo-splash-screen";
 import { useSession } from "@/lib/ctx";
 import { FAB } from "react-native-paper";
-import { useRouter } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-
+import { useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { deleteJournalEntry } from "@/services/api";
 
 // SplashScreen.preventAutoHideAsync();
 
@@ -36,9 +36,30 @@ export default function HomeScreen() {
   const router = useRouter();
 
   const handleAddEntry = () => {
-    router.navigate('addEntry')
-  }
-  
+    router.navigate("addEntry");
+  };
+
+  const handleEditEntry = (entry) => {
+    router.push({
+      pathname: "editEntry",
+      params: { entry: JSON.stringify(entry) },
+    });
+  };
+
+  const handleDeleteEntry = async (id) => {
+    try {
+      const success = await deleteJournalEntry(id);
+      if (success) {
+        alert("Deleted");
+      } else {
+        alert("Failed to delete entry");
+      }
+    } catch (error) {
+    } finally {
+      fetchEntries(); // Refresh entries after deletion
+    }
+  };
+
   useEffect(() => {
     if (loaded || error) {
       SplashScreen.hideAsync();
@@ -82,7 +103,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
+      <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
       <Text
         style={{
           fontFamily: "RobotoSerif_500Medium_Italic",
@@ -96,10 +117,8 @@ export default function HomeScreen() {
         renderItem={({ item }) => (
           <JournalEntryItem
             entry={item}
-            onPress={() => router.push({
-              pathname: 'editEntry',
-              params: { entry: JSON.stringify(item) }
-            })}
+            onPressEdit={handleEditEntry}
+            onPressDelete={handleDeleteEntry}
           />
         )}
         refreshControl={
@@ -113,7 +132,7 @@ export default function HomeScreen() {
         onPress={handleAddEntry}
         color="#ffd700"
         // background="#8a2be2"
-        rippleColor="rgba(0, 150, 136, 0.3)" 
+        rippleColor="rgba(0, 150, 136, 0.3)"
       />
     </View>
   );
@@ -129,6 +148,6 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 16,
-    backgroundColor: '#0000ff',
+    backgroundColor: "#0000ff",
   },
 });
