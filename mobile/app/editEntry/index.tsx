@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { Button } from "react-native-paper";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { updateJournalEntry, deleteJournalEntry } from "@/services/api";
 import { useRouter, useLocalSearchParams } from "expo-router";
@@ -8,8 +9,8 @@ import { Stack } from "expo-router";
 export default function EditEntryScreen() {
   const route = useRoute();
   //   const navigation = useNavigation();
-    const { entry } = route.params;
-//   const { entry } = useLocalSearchParams();
+  // const { entry } = route.params;
+  const { entry } = useLocalSearchParams();
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -33,7 +34,6 @@ export default function EditEntryScreen() {
       date: new Date(),
     });
     if (success) {
-      //   navigation.navigate('Home');
       router.push("/");
     } else {
       alert("Failed to update entry");
@@ -44,7 +44,6 @@ export default function EditEntryScreen() {
     const parsedEntry = JSON.parse(entry); // If you passed it as a string
     const success = await deleteJournalEntry(parsedEntry.id);
     if (success) {
-      //   navigation.navigate('Home');
       router.navigate("/");
     } else {
       alert("Failed to delete entry");
@@ -61,7 +60,13 @@ export default function EditEntryScreen() {
           },
         }}
       />
-      <Text>Edit Journal Entry</Text>
+      <Text
+        style={{
+          marginBottom: 4,
+        }}
+      >
+        Edit Journal Entry
+      </Text>
       <TextInput
         style={styles.input}
         placeholder="Title"
@@ -82,8 +87,32 @@ export default function EditEntryScreen() {
         value={category}
         onChangeText={setCategory}
       />
-      <Button title="Update" onPress={handleUpdateEntry} />
-      <Button title="Delete" onPress={handleDeleteEntry} />
+      <View
+        style={{
+          gap: 4,
+        }}
+      >
+        <Button
+          mode="contained"
+          buttonColor="blue"
+          rippleColor={"#000088"}
+          icon="update"
+          onPress={handleUpdateEntry}
+          textColor="#fefefe"
+        >
+          Update
+        </Button>
+        <Button
+          textColor="#fefefe"
+          mode="contained"
+          buttonColor="blue"
+          rippleColor={"#000088"}
+          icon="delete-empty"
+          onPress={handleDeleteEntry}
+        >
+          Delete
+        </Button>
+      </View>
     </View>
   );
 }
