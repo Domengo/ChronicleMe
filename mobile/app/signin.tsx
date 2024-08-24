@@ -5,7 +5,7 @@ import { useSession } from "@/lib/ctx";
 import { ActivityIndicator, MD2Colors, Button } from "react-native-paper";
 import { Avatar } from "react-native-paper";
 import { router } from "expo-router";
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from "expo-status-bar";
 
 export default function LoginScreen() {
   const [username, setUsername] = useState("");
@@ -23,15 +23,15 @@ export default function LoginScreen() {
     setLoading(false);
   };
 
-  // useEffect(() => {
-  //   if (isSuccess && !hasRedirected.current) {
-  //     hasRedirected.current = true; // Set flag to true after redirect
-  //     router.push('/home');
-  //   }
-  // }, [isSuccess]); // Redirect when isSuccess changes
-  if (isSuccess) {
-    router.push("/");
-  }
+  useEffect(() => {
+    if (isSuccess && !hasRedirected.current) {
+      hasRedirected.current = true; // Set flag to true after redirect
+      router.push('/');
+    }
+  }, [isSuccess]); // Redirect when isSuccess changes
+  // if (isSuccess) {
+  //   router.push("/");
+  // }
 
   return (
     <View style={styles.container}>
@@ -60,6 +60,8 @@ export default function LoginScreen() {
           onPress={handleLogin}
           loading={loading} // Show loading indicator in the button
           disabled={loading} // Disable the button while loading
+          style={loading ? styles.loadingButton : styles.buttonNormal}
+          labelStyle={styles.buttonText}
         >
           {loading ? "Logging in..." : "Login"}{" "}
           {/* Change button text based on loading state */}
@@ -98,14 +100,24 @@ const styles = StyleSheet.create({
   button: {
     marginBottom: 4,
   },
+  buttonNormal: {
+    backgroundColor: "#1e90ff", // Normal background color
+  },
+  loadingButton: {
+    backgroundColor: "#6495ed", // Background color during loading state
+  },
+  buttonText: {
+    color: "#FFF", // Text color to ensure it is visible against the button's background
+  },
+
   message: {
     marginTop: 20,
     textAlign: "center",
   },
   title: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 30,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
