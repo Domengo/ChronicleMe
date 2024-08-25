@@ -384,7 +384,7 @@ export default function HomeScreen() {
       setDate(selectedDate);
     }
   };
-  
+
   // useLayoutEffect(() => {
   //   navigation.setOptions({
   //     headerRight: () => (
@@ -421,7 +421,8 @@ export default function HomeScreen() {
     });
   };
 
-  const handleEditEntry = (entry: Entry) => { // Use the Entry interface here
+  const handleEditEntry = (entry: Entry) => {
+    // Use the Entry interface here
     router.push({
       pathname: "/editEntry",
       params: {
@@ -431,7 +432,8 @@ export default function HomeScreen() {
     });
   };
 
-  const handleDeleteEntry = async (id: number) => { // Use number for ID
+  const handleDeleteEntry = async (id: number) => {
+    // Use number for ID
     try {
       const success = await deleteJournalEntry(id.toString()); // Ensure ID is a string if necessary
       if (success) {
@@ -451,8 +453,6 @@ export default function HomeScreen() {
     }
   }, [loaded, error]);
 
-  
-
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     fetchEntries().finally(() => setRefreshing(false));
@@ -464,19 +464,14 @@ export default function HomeScreen() {
 
   const navigateToProfile = () => {
     closeProfileMenu();
-    router.push('/settings'); // Replace with your profile screen path
+    router.push('/profile');
   };
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <Menu
-        style={{
-          // position: 'absolute',
-          // top: 100,
-          backgroundColor: 'grey'
-        }}
-        statusBarHeight={48}
+          statusBarHeight={48}
           visible={profileMenuVisible}
           onDismiss={closeProfileMenu}
           anchor={
@@ -485,7 +480,7 @@ export default function HomeScreen() {
                 <Avatar.Image
                   size={40}
                   source={{
-                    uri: 'https://via.placeholder.com/150',
+                    uri: "https://via.placeholder.com/150",
                   }}
                 />
               )}
@@ -494,10 +489,22 @@ export default function HomeScreen() {
           }
           anchorPosition="bottom"
           mode="elevated"
-          
+          contentStyle={{
+            backgroundColor: "#dcdcdc",
+          }}
         >
-          <Menu.Item leadingIcon="account" onPress={navigateToProfile} title="Profile" />
-          <Menu.Item leadingIcon="logout" onPress={signOut} title="Sign Out" />
+          <Menu.Item
+            titleStyle={styles.menuItemText}
+            leadingIcon="account"
+            onPress={navigateToProfile}
+            title="Profile"
+          />
+          <Menu.Item
+            titleStyle={styles.menuItemText}
+            leadingIcon="logout"
+            onPress={signOut}
+            title="Sign Out"
+          />
         </Menu>
       ),
     });
@@ -506,8 +513,6 @@ export default function HomeScreen() {
   if (!loaded && !error) {
     return null;
   }
-
-
 
   return (
     <View style={styles.container}>
@@ -637,5 +642,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 50,
+  },
+  menuItemText: {
+    color: "#000000", // Text color for menu items
   },
 });

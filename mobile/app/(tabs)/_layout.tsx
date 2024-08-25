@@ -31,8 +31,8 @@ export default function TabLayout() {
 
         if (route.name === "index") {
           iconName = focused ? "home" : "home-outline";
-        } else if (route.name === "settings") {
-          iconName = focused ? "settings" : "settings-outline";
+        } else if (route.name === "profile") {
+          iconName = focused ? "person" : "person-outline";
         }
 
         return <Ionicons name={iconName} size={size} color={color} />;
@@ -44,8 +44,8 @@ export default function TabLayout() {
         options={{ title: 'Home',  }}
       />
       <Tabs.Screen
-        name="settings"
-        options={{ title: 'Settings' }}
+        name="profile"
+        options={{ title: 'Profile' }}
       />
     </Tabs>
   );
