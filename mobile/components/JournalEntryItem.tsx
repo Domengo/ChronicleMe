@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Modal,
   Button,
+  Pressable,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { BlurView, ExperimentalBlurMethod } from "expo-blur";
@@ -25,7 +26,7 @@ export default function JournalEntryItem({
     setModalVisible(false);
   };
   return (
-    <TouchableOpacity onPress={handlePress}>
+    <Pressable onPress={handlePress}>
       <View style={styles.card}>
         <View style={styles.dateTimeContainer}>
           <Text style={styles.date}>
@@ -104,7 +105,7 @@ export default function JournalEntryItem({
           </View>
         </BlurView>
       </Modal>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 
