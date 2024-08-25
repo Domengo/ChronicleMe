@@ -318,7 +318,7 @@ import { RobotoSerif_500Medium_Italic, useFonts } from "@expo-google-fonts/dev";
 import * as SplashScreen from "expo-splash-screen";
 import { useSession } from "@/lib/ctx";
 import { FAB, Menu, IconButton, Button, Avatar } from "react-native-paper";
-import { useRouter, useNavigation } from "expo-router";
+import { useRouter, useNavigation, Href } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import moment from "moment";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -385,19 +385,6 @@ export default function HomeScreen() {
     }
   };
 
-  // useLayoutEffect(() => {
-  //   navigation.setOptions({
-  //     headerRight: () => (
-  //       <Button
-  //         onPress={signOut}
-  //         // title="Sign Out"
-  //         mode="contained"
-  //         color={Platform.OS === "ios" ? "#007AFF" : "#000"}
-  //       >sign out</Button>
-  //     ),
-  //   });
-  // }, [navigation]);
-  // Clear date filter
   const clearDateFilter = () => {
     setDate(null);
   };
@@ -464,7 +451,7 @@ export default function HomeScreen() {
 
   const navigateToProfile = () => {
     closeProfileMenu();
-    router.push('/profile');
+    router.push('/profile' as Href<string>);
   };
 
   useLayoutEffect(() => {
