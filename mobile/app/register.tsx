@@ -5,10 +5,14 @@ import { Redirect, router } from "expo-router";
 import { ActivityIndicator, MD2Colors, Button } from "react-native-paper";
 import { StatusBar } from "expo-status-bar";
 
-
 export default function RegisterScreen() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [country, setCountry] = useState("");
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -44,11 +48,42 @@ export default function RegisterScreen() {
       />
       <TextInput
         style={styles.input}
+        placeholder="First Name"
+        value={firstName}
+        onChangeText={setFirstName}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Last Name"
+        value={lastName}
+        onChangeText={setLastName}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Phone"
+        value={phone}
+        onChangeText={setPhone}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Country"
+        value={country}
+        onChangeText={setCountry}
+      />
+
+      <TextInput
+        style={styles.input}
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
-        autoCapitalize='none'
+        autoCapitalize="none"
         blurOnSubmit={true}
       />
       <View style={styles.button}>
@@ -61,15 +96,15 @@ export default function RegisterScreen() {
         >
           {loading ? "Registering..." : "Register"}
         </Button>
-      
-      <Button
-        mode="contained"
-        icon="login" // Adding an icon to the button
-        onPress={() => router.push("/signin")}
-      >
-        Login
-      </Button>
-</View>
+
+        <Button
+          mode="contained"
+          icon="login" // Adding an icon to the button
+          onPress={() => router.push("/signin")}
+        >
+          Login
+        </Button>
+      </View>
       <Text style={[styles.message, { color: isSuccess ? "green" : "red" }]}>
         {message}
       </Text>
@@ -92,16 +127,15 @@ const styles = StyleSheet.create({
   },
   button: {
     gap: 4,
-
   },
   message: {
     marginTop: 20,
     textAlign: "center",
   },
   title: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 30,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });

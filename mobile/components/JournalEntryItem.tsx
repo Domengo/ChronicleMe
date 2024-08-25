@@ -4,6 +4,7 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
+  Image,
   Modal,
   Button,
   Pressable,
@@ -73,6 +74,12 @@ export default function JournalEntryItem({
             />
           </View>
         </View>
+        {entry.photo && (
+          <Image
+            source={{ uri: entry.photo }}
+            style={{ width: 100, height: 100 }}
+          />
+        )}
         <Text style={styles.category}>Category: {entry.category}</Text>
         <Text style={styles.content}>{entry.content}</Text>
       </View>

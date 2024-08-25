@@ -9,7 +9,8 @@ export async function saveToken(key, value) {
   try {
     if (Platform.OS === 'web') {
       await AsyncStorage.setItem(key, value);
-    } else { // mobile
+    } else { 
+      // mobile
       await SecureStore.setItemAsync(key, value.toString());
     }
   } catch (error) {
@@ -51,13 +52,13 @@ export const login = async (username, password) => {
   }
 };
 
-export const register = async (username, password) => {
+export const register = async (username, password, email, phone, country, firstName, lastName) => {
   const response = await fetch(`${API_URL}/auth/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ username, password, email, phone, country, first_name: firstName, last_name: lastName }),
   });
   return response.ok;
 };
