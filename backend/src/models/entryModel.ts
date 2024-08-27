@@ -25,8 +25,8 @@ export const getEntriesByUserId = async (userId: number): Promise<Entry[]> => {
 // Update createEntry to include the photo field
 export const createEntry = async (entry: Omit<Entry, 'id'>): Promise<Entry> => {
   const result = await pool.query(
-    'INSERT INTO entries (title, content, category, date, user_id, photo) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-    [entry.title, entry.content, entry.category, entry.date, entry.user_id, entry.photo]
+    'INSERT INTO entries (title, content, category, date, photo, user_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+    [entry.title, entry.content, entry.category, entry.date, entry.photo, entry.user_id]
   );
   return result.rows[0];
 };
