@@ -33,7 +33,7 @@ export default function RegisterScreen() {
       setIsSuccess(true);
       setTimeout(() => {
         return <Redirect href="/signin" />;
-      }, 2000);
+      }, 0);
     } else {
       setMessage("Registration failed. Please try again.");
       setIsSuccess(false);
