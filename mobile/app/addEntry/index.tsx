@@ -5,6 +5,7 @@ import { addJournalEntry } from "@/services/api";
 import { useRouter } from "expo-router";
 import { Stack } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
+import * as ImageManipulator from 'expo-image-manipulator';
 
 export default function AddEntryScreen({route}) {
   // const [title, setTitle] = useState("");
@@ -16,6 +17,15 @@ export default function AddEntryScreen({route}) {
   const [category, setCategory] = useState(route?.params?.entry?.category || '');
   const [photo, setPhoto] = useState(route?.params?.entry?.photo || null);
 
+  const compressImage = async (uri) => {
+    const manipResult = await ImageManipulator.manipulateAsync(
+      uri,
+      [{ resize: { width: 800 } }], // Resize the image to a width of 800 pixels
+      { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG } // Compress with 70% quality
+    );
+    return manipResult.uri;
+  };
+
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -25,7 +35,8 @@ export default function AddEntryScreen({route}) {
     });
 
     if (!result.canceled) {
-      setPhoto(result.assets[0].uri);
+      const compressedUri = await compressImage(result.assets[0].uri);
+      setPhoto(compressedUri);
     }
   };
 
