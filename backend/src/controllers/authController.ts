@@ -4,14 +4,23 @@ import jwt from "jsonwebtoken";
 import { getUserByUsername, createUser } from "../models/userModel";
 
 export const register = async (req: Request, res: Response) => {
-  const { username, password } = req.body;
+  const { username, password, email, phone, country, firstName, lastName } =
+    req.body;
   if (!username || !password) {
     return res
       .status(400)
       .json({ error: "Username and password are required" });
   }
   const hashedPassword = await bcrypt.hash(password, 10);
-  const user = await createUser(username, hashedPassword);
+  const user = await createUser(
+    username,
+    email,
+    phone,
+    country,
+    firstName,
+    lastName,
+    hashedPassword
+  );
   res.status(201).json(user);
 };
 
@@ -27,5 +36,4 @@ export const login = async (req: Request, res: Response) => {
     { expiresIn: "2h" }
   );
   res.json({ token });
-  
 };
