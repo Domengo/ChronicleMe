@@ -18,7 +18,15 @@ export default function RegisterScreen() {
   const [loading, setLoading] = useState(false);
 
   const handleRegister = async () => {
-    const success = await register(username, password);
+    const success = await register(
+      username,
+      password,
+      email,
+      phone,
+      country,
+      firstName,
+      lastName
+    );
     if (success) {
       setLoading(true);
       setMessage("Registration successful! Redirecting to login...");

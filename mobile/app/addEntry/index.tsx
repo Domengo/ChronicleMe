@@ -6,11 +6,15 @@ import { useRouter } from "expo-router";
 import { Stack } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 
-export default function AddEntryScreen() {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [category, setCategory] = useState("");
-  const [photo, setPhoto] = useState<string | null>(null);
+export default function AddEntryScreen({route}) {
+  // const [title, setTitle] = useState("");
+  // const [content, setContent] = useState("");
+  // const [category, setCategory] = useState("");
+  // const [photo, setPhoto] = useState<string | null>(null);
+  const [title, setTitle] = useState(route?.params?.entry?.title || '');
+  const [content, setContent] = useState(route?.params?.entry?.content || '');
+  const [category, setCategory] = useState(route?.params?.entry?.category || '');
+  const [photo, setPhoto] = useState(route?.params?.entry?.photo || null);
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -36,6 +40,7 @@ export default function AddEntryScreen() {
         date: new Date(),
         photo,
       };
+      
       const success = await addJournalEntry(newEntry);
       if (success) {
         router.navigate("/");

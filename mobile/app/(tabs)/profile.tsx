@@ -22,18 +22,18 @@
 //   return (
 //     <View style={styles.container}>
 //       <Text>Update Profile</Text>
-//       <TextInput 
-//         style={styles.input} 
-//         placeholder="New Username" 
-//         value={username} 
-//         onChangeText={setUsername} 
+//       <TextInput
+//         style={styles.input}
+//         placeholder="New Username"
+//         value={username}
+//         onChangeText={setUsername}
 //       />
-//       <TextInput 
-//         style={styles.input} 
-//         placeholder="New Password" 
-//         value={password} 
-//         onChangeText={setPassword} 
-//         secureTextEntry 
+//       <TextInput
+//         style={styles.input}
+//         placeholder="New Password"
+//         value={password}
+//         onChangeText={setPassword}
+//         secureTextEntry
 //       />
 //       <Button title="Update" onPress={handleUpdate} />
 //       {message && (
@@ -63,26 +63,39 @@
 //     paddingHorizontal: 8,
 //   },
 // });
-import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
-import { Avatar, IconButton, Button } from 'react-native-paper';
-import { updateProfile } from '@/services/api';
+import React, { useState } from "react";
+import { View, Text, TextInput, StyleSheet } from "react-native";
+import { Avatar, IconButton, Button } from "react-native-paper";
+import { updateProfile } from "@/services/api";
 
 export default function ProfileScreen() {
-  const [username, setUsername] = useState('John Doe'); // Example username
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [username, setUsername] = useState("John Doe"); // Example username
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [email, setemail] = useState("");
+  const [phone, setphone] = useState("");
+  const [country, setcountry] = useState("");
+  const [firstName, setfirstName] = useState("");
+  const [lastName, setlastName] = useState("");
   const [success, setSuccess] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
 
   const handleUpdate = async () => {
-    const success = await updateProfile(username, password);
+    const success = await updateProfile(
+      username,
+      password,
+      email,
+      phone,
+      country,
+      firstName,
+      lastName
+    );
     if (success) {
-      setMessage('Profile updated successfully!');
+      setMessage("Profile updated successfully!");
       setSuccess(true);
       setIsEditing(false);
     } else {
-      setMessage('Update failed. Please try again.');
+      setMessage("Update failed. Please try again.");
       setSuccess(false);
     }
   };
@@ -93,7 +106,7 @@ export default function ProfileScreen() {
 
   const handleCancel = () => {
     setIsEditing(false);
-    setPassword(''); // Optionally reset the password field
+    setPassword(""); // Optionally reset the password field
   };
 
   return (
@@ -101,7 +114,7 @@ export default function ProfileScreen() {
       <View style={styles.header}>
         <Avatar.Image
           size={80}
-          source={{ uri: 'https://via.placeholder.com/150' }} // Placeholder image URL
+          source={{ uri: "https://via.placeholder.com/150" }} // Placeholder image URL
           style={styles.avatar}
         />
         <View style={styles.nameContainer}>
@@ -131,10 +144,18 @@ export default function ProfileScreen() {
             secureTextEntry
           />
           <View style={styles.buttonContainer}>
-            <Button mode="contained" onPress={handleUpdate} style={styles.updateButton}>
+            <Button
+              mode="contained"
+              onPress={handleUpdate}
+              style={styles.updateButton}
+            >
               Update Profile
             </Button>
-            <Button mode="outlined" onPress={handleCancel} style={styles.cancelButton}>
+            <Button
+              mode="outlined"
+              onPress={handleCancel}
+              style={styles.cancelButton}
+            >
               Cancel
             </Button>
           </View>
@@ -149,7 +170,7 @@ export default function ProfileScreen() {
       )}
 
       {message && (
-        <Text style={[styles.message, { color: success ? 'green' : 'red' }]}>
+        <Text style={[styles.message, { color: success ? "green" : "red" }]}>
           {message}
         </Text>
       )}
@@ -161,22 +182,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: "#f9f9f9",
   },
   header: {
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 24,
   },
   avatar: {
     marginBottom: 16,
   },
   nameContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   name: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginRight: 8,
   },
   editIcon: {
@@ -187,15 +208,15 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderWidth: 1,
     borderRadius: 5,
     marginBottom: 12,
     paddingHorizontal: 8,
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   updateButton: {
     flex: 1,
@@ -210,17 +231,17 @@ const styles = StyleSheet.create({
   },
   detailLabel: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 4,
   },
   detailValue: {
     fontSize: 16,
     marginBottom: 16,
-    color: '#555',
+    color: "#555",
   },
   message: {
     marginTop: 20,
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 16,
   },
 });
