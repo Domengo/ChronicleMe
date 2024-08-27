@@ -11,17 +11,22 @@ export const register = async (req: Request, res: Response) => {
       .status(400)
       .json({ error: "Username and password are required" });
   }
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const user = await createUser(
-    username,
-    email,
-    phone,
-    country,
-    firstName,
-    lastName,
-    hashedPassword
-  );
-  res.status(201).json(user);
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await createUser(
+      username,
+      email,
+      phone,
+      country,
+      firstName,
+      lastName,
+      hashedPassword
+    );
+    res.status(201).json(user);
+  } catch (error) {
+    console.error("Error registering user:", error);
+    res.status(500).json({ message: "Server error" });
+  }
 };
 
 export const login = async (req: Request, res: Response) => {

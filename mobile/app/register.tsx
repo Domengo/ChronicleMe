@@ -41,6 +41,9 @@ export default function RegisterScreen() {
     }
   };
 
+  console.log('Registering user:', { username, password, email, phone, country, firstName, lastName });
+
+
   return (
     <View style={styles.container}>
       <StatusBar style="dark" animated />
