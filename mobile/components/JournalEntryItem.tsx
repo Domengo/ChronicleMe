@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  TouchableOpacity,
   StyleSheet,
   Image,
   Modal,
@@ -106,6 +105,12 @@ export default function JournalEntryItem({
             </View>
             <Text style={styles.title}>{entry.title}</Text>
             <Text style={styles.category}>Category: {entry.category}</Text>
+            {entry.photo && (
+          <Image
+            source={{ uri: entry.photo }}
+            style={{ width: 100, height: 100 }}
+          />
+        )}
             <Text style={styles.content}>{entry.content}</Text>
 
             <Button title="Close" onPress={closeModal} />
@@ -133,6 +138,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
+    // textAlignVertical: 'auto'
   },
   content: {
     marginTop: 8,
@@ -165,7 +171,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     flexDirection: "row",
     justifyContent: "flex-end",
-    padding: 4,
+    paddingTop: 4,
   },
   tt: {
     flexDirection: "row",

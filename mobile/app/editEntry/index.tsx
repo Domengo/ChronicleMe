@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-native-paper";
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { View, Text, TextInput, StyleSheet, Image } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { updateJournalEntry, deleteJournalEntry } from "@/services/api";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { Stack } from "expo-router";
+import * as ImagePicker from "expo-image-picker";
+import * as ImageManipulator from "expo-image-manipulator";
 
 export default function EditEntryScreen() {
   const route = useRoute();
@@ -15,6 +17,7 @@ export default function EditEntryScreen() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
+  const [photo, setPhoto] = useState<string | null>(null);
 
   useEffect(() => {
     if (entry) {
@@ -22,8 +25,32 @@ export default function EditEntryScreen() {
       setTitle(parsedEntry.title);
       setContent(parsedEntry.content);
       setCategory(parsedEntry.category);
+      setPhoto(parsedEntry.photo || null);
     }
   }, [entry]);
+
+  const compressImage = async (uri: string) => {
+    const manipResult = await ImageManipulator.manipulateAsync(
+      uri,
+      [{ resize: { width: 800 } }], // Resize the image to a width of 800 pixels
+      { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG } // Compress with 70% quality
+    );
+    return manipResult.uri;
+  };
+
+  const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      const compressedUri = await compressImage(result.assets[0].uri);
+      setPhoto(compressedUri);
+    }
+  };
 
   const handleUpdateEntry = async () => {
     const parsedEntry = JSON.parse(entry); // If you passed it as a string
@@ -32,6 +59,7 @@ export default function EditEntryScreen() {
       content,
       category,
       date: new Date(),
+      photo,
     });
     if (success) {
       router.push("/");
@@ -87,6 +115,12 @@ export default function EditEntryScreen() {
         value={category}
         onChangeText={setCategory}
       />
+      <Button onPress={pickImage}>
+        Pick a Photo
+      </Button>
+      {photo && (
+        <Image source={{ uri: photo }} style={{ width: 200, height: 200 }} />
+      )}
       <View
         style={{
           gap: 4,
