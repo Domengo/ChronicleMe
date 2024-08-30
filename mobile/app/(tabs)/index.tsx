@@ -3,6 +3,7 @@ import React, {
   useState,
   useCallback,
   useLayoutEffect,
+  lazy,
 } from "react";
 import {
   View,
@@ -25,6 +26,8 @@ import moment from "moment";
 import DateTimePicker from "@react-native-community/datetimepicker";
 // import {WebView} from 'react-native-webview'
 
+import { Snackbar } from "react-native-paper";
+
 // Define the Entry interface
 interface Entry {
   id: number;
@@ -46,6 +49,12 @@ export default function HomeScreen() {
     RobotoSerif_500Medium_Italic,
   });
   const [refreshing, setRefreshing] = React.useState(false);
+  const [visible, setVisible] = React.useState(false);
+
+  const onToggleSnackBar = () => setVisible(!visible);
+
+  const onDismissSnackBar = () => setVisible(false);
+
   const { signOut } = useSession();
   const router = useRouter();
 
@@ -153,7 +162,7 @@ export default function HomeScreen() {
 
   const navigateToProfile = () => {
     closeProfileMenu();
-    router.push('/profile' as Href<string>);
+    router.push("/profile" as Href<string>);
   };
 
   useLayoutEffect(() => {
@@ -206,12 +215,33 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       {/* <WebView source={{ uri: 'https://reactnative.dev/' }} /> */}
-      <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
+      <StatusBar
+        style={Platform.OS === "ios" ? "light" : "dark"}
+        animated
+        translucent
+      />
+      <Snackbar
+        visible={visible}
+        onDismiss={onDismissSnackBar}
+        action={{
+          label: "RETRY",
+          onPress: fetchEntries, // Retry fetching entries
+        }}
+      >
+        Error fetching entries. Please check your connection.
+      </Snackbar>
       {/* Date Picker and Sort Filter Section */}
       <View style={styles.filterContainer}>
         {/* Date Picker */}
         <View style={styles.datePickerContainer}>
           <Button
+            buttonColor="blue"
+            background={{
+              color: "#00008b",
+              borderless: true,
+            }}
+            // rippleColor="#00008b"
+            // textColor="#dc143c"
             mode="outlined"
             icon="calendar"
             onPress={() => setShowDatePicker(true)}
@@ -235,6 +265,11 @@ export default function HomeScreen() {
           anchor={
             <Button
               mode="outlined"
+              textColor="#483d8b"
+              background={{
+                color: "#483d8b",
+                borderless: true,
+              }}
               icon={sortOrder === "asc" ? "arrow-up" : "arrow-down"}
               onPress={() => setMenuVisible(true)}
             >

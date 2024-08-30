@@ -128,26 +128,51 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Image
 } from "react-native";
 import { useRouter } from "expo-router";
 import Icon from "react-native-vector-icons/Feather";
 import Snackbar from "react-native-snackbar";
 import { addJournalEntry } from "@/services/api";
 import { Stack } from "expo-router";
-// import * as ImagePicker from "expo-image-picker";
-// import * as ImageManipulator from 'expo-image-manipulator';
+import * as ImagePicker from "expo-image-picker";
+import * as ImageManipulator from "expo-image-manipulator";
 
-export default function AddEntryScreen({route}) {
+export default function AddEntryScreen({ route }) {
   // const [title, setTitle] = useState("");
   // const [content, setContent] = useState("");
   // const [category, setCategory] = useState("");
   // const [photoAdded, setPhotoAdded] = useState(false);
-  const [title, setTitle] = useState(route?.params?.entry?.title || '');
-  const [content, setContent] = useState(route?.params?.entry?.content || '');
-  const [category, setCategory] = useState(route?.params?.entry?.category || '');
+  const [title, setTitle] = useState(route?.params?.entry?.title || "");
+  const [content, setContent] = useState(route?.params?.entry?.content || "");
+  const [category, setCategory] = useState(
+    route?.params?.entry?.category || ""
+  );
   const [photo, setPhoto] = useState(route?.params?.entry?.photo || null);
   // const [failedEntry, setFailedEntry] = useState(null); // Store the failed entry
 
+  const compressImage = async (uri) => {
+    const manipResult = await ImageManipulator.manipulateAsync(
+      uri,
+      [{ resize: { width: 800 } }], // Resize the image to a width of 800 pixels
+      { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG } // Compress with 70% quality
+    );
+    return manipResult.uri;
+  };
+
+  const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      const compressedUri = await compressImage(result.assets[0].uri);
+      setPhoto(compressedUri);
+    }
+  };
   const router = useRouter();
 
   const handleSubmit = async () => {
@@ -183,6 +208,7 @@ export default function AddEntryScreen({route}) {
         // });
       }
     } catch (error) {
+      console.error("Error saving entry:", error);
       // Snackbar.show({
       //   text: "An error occurred while saving the entry. Please try again.",
       //   // duration: Snackbar.LENGTH_INDEFINITE,
@@ -198,16 +224,24 @@ export default function AddEntryScreen({route}) {
     }
   };
 
-  const handleAddPhoto = () => {
-    // Implement photo selection logic here
-    setPhotoAdded(true);
-  };
+  // const handleAddPhoto = () => {
+  //   // Implement photo selection logic here
+  //   setPhoto(true);
+  // };
 
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
+      <Stack.Screen
+        options={{
+          title: "Add Entry",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
+      />
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Text style={styles.label}>Title</Text>
         <TextInput
@@ -234,12 +268,15 @@ export default function AddEntryScreen({route}) {
           placeholder="Enter category"
         />
 
-        <TouchableOpacity style={styles.photoButton} onPress={handleAddPhoto}>
+        <TouchableOpacity style={styles.photoButton} onPress={pickImage}>
           <Icon name="camera" size={24} color="#4A90E2" />
           <Text style={styles.photoText}>
-            Add Photo {photoAdded ? "✓" : "(Optional)"}
+            Add Photo {photo ? "✓" : "(Optional)"}
           </Text>
         </TouchableOpacity>
+        {photo && (
+          <Image source={{ uri: photo }} style={{ width: 200, height: 200 }} />
+        )}
 
         <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
           <Text style={styles.submitButtonText}>Add Entry</Text>
