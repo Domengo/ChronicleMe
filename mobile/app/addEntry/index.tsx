@@ -132,7 +132,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import Icon from "react-native-vector-icons/Feather";
-import Snackbar from "react-native-snackbar";
+import {Snackbar} from "react-native-paper";
 import { addJournalEntry } from "@/services/api";
 import { Stack } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
@@ -150,6 +150,11 @@ export default function AddEntryScreen({ route }) {
   );
   const [photo, setPhoto] = useState(route?.params?.entry?.photo || null);
   // const [failedEntry, setFailedEntry] = useState(null); // Store the failed entry
+  const [visible, setVisible] = React.useState(false);
+
+  const onToggleSnackBar = () => setVisible(!visible);
+
+  const onDismissSnackBar = () => setVisible(false);
 
   const compressImage = async (uri) => {
     const manipResult = await ImageManipulator.manipulateAsync(
@@ -186,7 +191,12 @@ export default function AddEntryScreen({ route }) {
       };
       const success = await addJournalEntry(newEntry);
       if (success) {
-        router.navigate("/"); // Navigate back to the hom;
+        setVisible(true);
+        setTimeout(() => {
+          setVisible(false);
+          router.navigate("/");
+        }, 2000);
+         // Navigate back to the hom;
 
         // Snackbar.show({
         //   text: "Entry added successfully!",
@@ -206,6 +216,7 @@ export default function AddEntryScreen({ route }) {
         //     },
         //   },
         // });
+        alert("Failed to add entry");
       }
     } catch (error) {
       console.error("Error saving entry:", error);
@@ -277,6 +288,18 @@ export default function AddEntryScreen({ route }) {
           <Text style={styles.submitButtonText}>Add Entry</Text>
         </TouchableOpacity>
       </ScrollView>
+      <Snackbar
+        visible={visible}
+        onDismiss={onDismissSnackBar}
+        duration={2000}
+        action={{
+          label: 'Home',
+          onPress: () => {
+            router.push('/');
+          },
+        }}>
+        Entry added successfully!
+      </Snackbar>
     </KeyboardAvoidingView>
   );
 }
