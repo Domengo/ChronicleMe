@@ -224,11 +224,6 @@ export default function AddEntryScreen({ route }) {
     }
   };
 
-  // const handleAddPhoto = () => {
-  //   // Implement photo selection logic here
-  //   setPhoto(true);
-  // };
-
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}

@@ -16,7 +16,8 @@ import { Feather } from "@expo/vector-icons";
 import { Stack } from "expo-router";
 import * as ImagePicker from "expo-image-picker";
 import * as ImageManipulator from "expo-image-manipulator";
-import { updateJournalEntry, deleteJournalEntry } from "@/services/api";
+import { updateJournalEntry} from "@/services/api";
+import { Button, Snackbar } from 'react-native-paper';
 
 export default function EditEntryScreen() {
   const router = useRouter();
@@ -25,6 +26,12 @@ export default function EditEntryScreen() {
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
   const [photo, setPhoto] = useState<string | null>(null);
+
+  const [visible, setVisible] = React.useState(false);
+
+  const onToggleSnackBar = () => setVisible(!visible);
+
+  const onDismissSnackBar = () => setVisible(false);
 
   useEffect(() => {
     if (entry) {
@@ -69,7 +76,12 @@ export default function EditEntryScreen() {
       photo,
     });
     if (success) {
-      router.push("/");
+      setVisible(true);
+      setTimeout(() => {
+        setVisible(false)
+        router.push("/");
+      }, 2000);
+      
     } else {
       alert("Failed to update entry");
     }
@@ -87,6 +99,7 @@ export default function EditEntryScreen() {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
+      
       <Stack.Screen
         options={{
           title: "Edit Entry",
@@ -153,6 +166,18 @@ export default function EditEntryScreen() {
           <Text style={styles.submitButtonText}>Update Entry</Text>
         </TouchableOpacity>
       </ScrollView>
+      <Snackbar
+        visible={visible}
+        onDismiss={onDismissSnackBar}
+        duration={2000}
+        action={{
+          label: 'Home',
+          onPress: () => {
+            router.push('/');
+          },
+        }}>
+        Entry updated successfully!
+      </Snackbar>
     </KeyboardAvoidingView>
   );
 }
