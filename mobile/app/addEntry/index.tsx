@@ -133,13 +133,20 @@ import { useRouter } from "expo-router";
 import Icon from "react-native-vector-icons/Feather";
 import Snackbar from "react-native-snackbar";
 import { addJournalEntry } from "@/services/api";
+import { Stack } from "expo-router";
+// import * as ImagePicker from "expo-image-picker";
+// import * as ImageManipulator from 'expo-image-manipulator';
 
-export default function AddEntryScreen() {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [category, setCategory] = useState("");
-  const [photoAdded, setPhotoAdded] = useState(false);
-  const [failedEntry, setFailedEntry] = useState(null); // Store the failed entry
+export default function AddEntryScreen({route}) {
+  // const [title, setTitle] = useState("");
+  // const [content, setContent] = useState("");
+  // const [category, setCategory] = useState("");
+  // const [photoAdded, setPhotoAdded] = useState(false);
+  const [title, setTitle] = useState(route?.params?.entry?.title || '');
+  const [content, setContent] = useState(route?.params?.entry?.content || '');
+  const [category, setCategory] = useState(route?.params?.entry?.category || '');
+  const [photo, setPhoto] = useState(route?.params?.entry?.photo || null);
+  // const [failedEntry, setFailedEntry] = useState(null); // Store the failed entry
 
   const router = useRouter();
 
@@ -150,47 +157,44 @@ export default function AddEntryScreen() {
         content,
         category,
         date: new Date(),
-        photoAdded,
+        photo,
       };
       const success = await addJournalEntry(newEntry);
       if (success) {
         router.navigate("/"); // Navigate back to the hom;
 
-        Snackbar.show({
-          text: "Entry added successfully!",
-          // duration: Snackbar.LENGTH_SHORT,
-          backgroundColor: "#4CAF50",
-        });
+        // Snackbar.show({
+        //   text: "Entry added successfully!",
+        //   // duration: Snackbar.LENGTH_SHORT,
+        //   backgroundColor: "#4CAF50",
+        // });
       } else {
-        Snackbar.show({
-          text: "Failed to add entry. Please try again.",
-          // duration: Snackbar.LENGTH_INDEFINITE,
-          backgroundColor: "#F44336",
-          action: {
-            text: "RELOAD",
-            textColor: "green",
-            onPress: () => {
-              /* Do something. */
-            },
-          },
-        });
+        // Snackbar.show({
+        //   text: "Failed to add entry. Please try again.",
+        //   // duration: Snackbar.LENGTH_INDEFINITE,
+        //   backgroundColor: "#F44336",
+        //   action: {
+        //     text: "RELOAD",
+        //     textColor: "green",
+        //     onPress: () => {
+        //       /* Do something. */
+        //     },
+        //   },
+        // });
       }
-
-      // Navigate to home screen
-      router.navigate("/");
     } catch (error) {
-      Snackbar.show({
-        text: "An error occurred while saving the entry. Please try again.",
-        // duration: Snackbar.LENGTH_INDEFINITE,
-        backgroundColor: "#F44336",
-        action: {
-          text: "RELOAD",
-          textColor: "green",
-          onPress: () => {
-            /* Do something. */
-          },
-        },
-      });
+      // Snackbar.show({
+      //   text: "An error occurred while saving the entry. Please try again.",
+      //   // duration: Snackbar.LENGTH_INDEFINITE,
+      //   backgroundColor: "#F44336",
+      //   action: {
+      //     text: "RELOAD",
+      //     textColor: "green",
+      //     onPress: () => {
+      //       /* Do something. */
+      //     },
+      //   },
+      // });
     }
   };
 
