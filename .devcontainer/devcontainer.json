@@ -1,0 +1,23 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+  "features": {
+    "ghcr.io/devcontainers/features/sshd:1": {
+      "version": "latest"
+    }
+  },
+  "forwardPorts": [
+    22,
+    3000,
+    3001
+  ],
+  "portsAttributes": {
+    "3000": {
+      "protocol": "http",
+      "label": "App Port 3000"
+    },
+    "3001": {
+      "protocol": "http",
+      "label": "App Port 3001"
+    }
+  }
+}
