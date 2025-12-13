@@ -5,8 +5,8 @@ import authRoutes from './routes/authRoutes';
 import entryRoutes from './routes/entryRoutes';
 import profileRoutes from './routes/profileRoutes';
 import dotenv from 'dotenv';
-import helmet from 'helmet';
-import type { RequestHandler } from 'express';
+// import helmet from 'helmet';
+// import type { RequestHandler } from 'express';
 import compression from 'compression';
 
 dotenv.config();
@@ -33,13 +33,21 @@ app.use(bodyParser.json({ limit: '50mb' }));
 //   }),
 // );
 
-const cspMiddleware = helmet.contentSecurityPolicy({
-  directives: {
-    "script-src": ["'self'", "code.jquery.com", "cdn.jsdelivr.net"],
-  },
-}) as unknown as RequestHandler;
+// const cspMiddleware = helmet.contentSecurityPolicy({
+//   directives: {
+//     "script-src": ["'self'", "code.jquery.com", "cdn.jsdelivr.net"],
+//   },
+// }) as unknown as RequestHandler;
 
-app.use(cspMiddleware);
+// app.use(cspMiddleware);
+
+app.use((req, res, next) => {
+  res.setHeader(
+    'Content-Security-Policy',
+    "script-src 'self' code.jquery.com cdn.jsdelivr.net"
+  );
+  next();
+});
 
 
 app.use('/auth', authRoutes);
