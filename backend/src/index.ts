@@ -5,8 +5,7 @@ import authRoutes from './routes/authRoutes';
 import entryRoutes from './routes/entryRoutes';
 import profileRoutes from './routes/profileRoutes';
 import dotenv from 'dotenv';
-// import helmet from 'helmet';
-// import type { RequestHandler } from 'express';
+import {Request, Response, NextFunction} from 'express';
 import compression from 'compression';
 
 dotenv.config();
@@ -23,25 +22,7 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true }))
 // parse application/json
 app.use(bodyParser.json({ limit: '50mb' }));
 
-// Add helmet to the middleware chain.
-// Set CSP headers to allow our Bootstrap and Jquery to be served
-// app.use(
-//   helmet.contentSecurityPolicy({
-//     directives: {
-//       "script-src": ["'self'", "code.jquery.com", "cdn.jsdelivr.net"],
-//     },
-//   }),
-// );
-
-// const cspMiddleware = helmet.contentSecurityPolicy({
-//   directives: {
-//     "script-src": ["'self'", "code.jquery.com", "cdn.jsdelivr.net"],
-//   },
-// }) as unknown as RequestHandler;
-
-// app.use(cspMiddleware);
-
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader(
     'Content-Security-Policy',
     "script-src 'self' code.jquery.com cdn.jsdelivr.net"
