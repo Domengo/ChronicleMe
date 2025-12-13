@@ -15,5 +15,6 @@
             "username": "postgress",
             "database": "journalapp_gb6h"
         }
-    ]
+    ],
+    "kiroAgent.configureMCP": "Disabled"
 }

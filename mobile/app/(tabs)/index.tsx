@@ -20,11 +20,12 @@ import { RobotoSerif_500Medium_Italic, useFonts } from "@expo-google-fonts/dev";
 import * as SplashScreen from "expo-splash-screen";
 import { useSession } from "@/lib/ctx";
 import { FAB, Menu, IconButton, Button, Avatar } from "react-native-paper";
-import { useRouter, useNavigation, Href } from "expo-router";
+import { useRouter, useNavigation, Href, Link } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import moment from "moment";
 import DateTimePicker from "@react-native-community/datetimepicker";
 // import {WebView} from 'react-native-webview'
+import { SignedIn, SignedOut, useUser } from '@clerk/clerk-expo'
 
 import { Snackbar } from "react-native-paper";
 
@@ -37,6 +38,8 @@ interface Entry {
 }
 
 export default function HomeScreen() {
+  const { user } = useUser()
+
   const [entries, setEntries] = useState<Entry[]>([]); // Use the Entry interface
   const [filteredEntries, setFilteredEntries] = useState<Entry[]>([]);
   const [date, setDate] = useState<Date | null>(null); // Explicitly typed
@@ -212,6 +215,7 @@ export default function HomeScreen() {
     return null;
   }
 
+
   return (
     <View style={styles.container}>
       {/* <WebView source={{ uri: 'https://reactnative.dev/' }} /> */}
@@ -220,6 +224,19 @@ export default function HomeScreen() {
         animated
         translucent
       />
+      <View>
+      <SignedIn>
+        <Text>Hello {user?.emailAddresses[0].emailAddress}</Text>
+      </SignedIn>
+      <SignedOut>
+        <Link href="/(auth)/sign-in">
+          <Text>Sign In</Text>
+        </Link>
+        <Link href="/(auth)/sign-up">
+          <Text>Sign Up</Text>
+        </Link>
+      </SignedOut>
+    </View>
       <Snackbar
         visible={visible}
         onDismiss={onDismissSnackBar}
