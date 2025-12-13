@@ -5,16 +5,20 @@ import authRoutes from './routes/authRoutes';
 import entryRoutes from './routes/entryRoutes';
 import profileRoutes from './routes/profileRoutes';
 import dotenv from 'dotenv';
-import {Request, Response, NextFunction} from 'express';
+import {Request, Response, NextFunction, RequestHandler} from 'express';
 import compression from 'compression';
 
 dotenv.config();
 
 const app = express();
 
-app.use(cors());
 
-app.use(compression()); // Compress all routes
+
+const corsMiddleware: RequestHandler = cors();
+const compressionMiddleware: RequestHandler = compression();
+
+app.use(corsMiddleware);
+app.use(compressionMiddleware);
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true }))
