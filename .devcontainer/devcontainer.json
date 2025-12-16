@@ -3,12 +3,14 @@
   "features": {
     "ghcr.io/devcontainers/features/sshd:1": {
       "version": "latest"
-    }
+    },
+    "ghcr.io/devcontainers/features/node:1": {}
   },
   "forwardPorts": [
     22,
     3000,
-    3001
+    3001,
+    8081
   ],
   "portsAttributes": {
     "3000": {
