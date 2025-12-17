@@ -20,13 +20,11 @@ import { RobotoSerif_500Medium_Italic, useFonts } from "@expo-google-fonts/dev";
 import * as SplashScreen from "expo-splash-screen";
 import { useSession } from "@/lib/ctx";
 import { FAB, Menu, IconButton, Button, Avatar } from "react-native-paper";
-import { useRouter, useNavigation, Href, Link } from "expo-router";
+import { useRouter, useNavigation, Href } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import moment from "moment";
 import DateTimePicker from "@react-native-community/datetimepicker";
 // import {WebView} from 'react-native-webview'
-import { SignedIn, SignedOut, useUser } from '@clerk/clerk-expo'
-
 import { Snackbar } from "react-native-paper";
 
 // Define the Entry interface
@@ -38,8 +36,6 @@ interface Entry {
 }
 
 export default function HomeScreen() {
-  const { user } = useUser()
-
   const [entries, setEntries] = useState<Entry[]>([]); // Use the Entry interface
   const [filteredEntries, setFilteredEntries] = useState<Entry[]>([]);
   const [date, setDate] = useState<Date | null>(null); // Explicitly typed
@@ -58,7 +54,9 @@ export default function HomeScreen() {
 
   const onDismissSnackBar = () => setVisible(false);
 
-  const { signOut } = useSession();
+  const {user, signOut } = useSession();
+
+  console.log("User in HomeScreen:", user);
   const router = useRouter();
 
   const fetchEntries = async () => {
@@ -225,18 +223,10 @@ export default function HomeScreen() {
         translucent
       />
       <View>
-      <SignedIn>
-        <Text>Hello {user?.emailAddresses[0].emailAddress}</Text>
-      </SignedIn>
-      <SignedOut>
-        <Link href="/(auth)/sign-in">
-          <Text>Sign In</Text>
-        </Link>
-        <Link href="/(auth)/sign-up">
-          <Text>Sign Up</Text>
-        </Link>
-      </SignedOut>
-    </View>
+        <Text style={{ fontSize: 24, fontFamily: "RobotoSerif_500Medium_Italic" }}>
+          Welcome back, {user?.username || "User"}!
+        </Text>
+      </View>
       <Snackbar
         visible={visible}
         onDismiss={onDismissSnackBar}

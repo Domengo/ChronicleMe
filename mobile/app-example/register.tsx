@@ -32,7 +32,7 @@ export default function RegisterScreen() {
       setMessage("Registration successful! Redirecting to login...");
       setIsSuccess(true);
       setTimeout(() => {
-        return <Redirect href="/signin" />;
+        return <Redirect href="/sign-in" />;
       }, 0);
     } else {
       setMessage("Registration failed. Please try again.");
@@ -111,7 +111,7 @@ export default function RegisterScreen() {
         <Button
           mode="contained"
           icon="login" // Adding an icon to the button
-          onPress={() => router.push("/signin")}
+          onPress={() => router.push("/sign-in")}
         >
           Login
         </Button>

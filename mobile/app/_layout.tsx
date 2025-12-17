@@ -3,6 +3,7 @@ import { PaperProvider } from "react-native-paper";
 import { SessionProvider } from "@/lib/ctx";
 import { ClerkProvider, ClerkLoaded } from "@clerk/clerk-expo";
 import * as SecureStore from 'expo-secure-store'
+import '../global.css'
 
 export interface TokenCache {
   getToken: (key: string) => Promise<string | undefined | null>
@@ -51,6 +52,7 @@ export default function RootLayout() {
         <SessionProvider>
           <PaperProvider>
             <Stack>
+              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             </Stack>
           </PaperProvider>
